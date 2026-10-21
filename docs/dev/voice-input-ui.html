@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EduWork · 原生输入框听写</title>
+<style>
+:root{--red:#a62439;--ink:#302c2c;--muted:#998c85;--line:#e9e0dc;--soft:#faf5f1}*{box-sizing:border-box}body{margin:0;background:#f1ede9;color:var(--ink);font:14px -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #c9919b;outline-offset:3px}.preview{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:#30292a;color:#fff}.preview strong{font-size:17px}.preview small{display:block;color:#c7babb;margin-top:6px}.switch{display:flex;gap:6px}.switch button{background:#493e40;color:#e2d9d9;border:0;border-radius:7px;padding:9px 13px}.switch button.selected{background:#fff;color:#803044}.frame{position:relative;margin:24px auto;width:1200px;height:800px;border:1px solid #dacfc9;border-radius:12px;background:#fff;overflow:hidden;box-shadow:0 18px 65px #57443412}.titlebar{height:34px;background:#f9f2ec;border-bottom:1px solid #ede5de;display:flex;align-items:center;padding:0 14px;font-size:12px;gap:7px}.brand{background:var(--red);color:#fff;width:20px;height:20px;display:inline-grid;place-items:center;border-radius:5px;font-weight:700}.windowdots{margin-left:auto;color:#a99c97;letter-spacing:12px}.layout{display:flex;height:calc(100% - 34px)}aside{width:220px;background:var(--soft);border-right:1px solid var(--line);padding:23px 14px;display:flex;flex-direction:column}.logo{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:650;margin-bottom:26px}.logo .brand{width:26px;height:26px;font-size:20px}.newchat{border:1px solid #ddc0b8;background:white;border-radius:9px;padding:11px;color:#52413f}.label{font-size:12px;color:var(--muted);margin:28px 10px 12px}.workspace{padding:9px;font-size:13px}.conversation{padding:11px 10px;background:#f1e5df;border-radius:7px;font-size:13px;display:flex;justify-content:space-between}.conversation small{color:#a38d85}.sidebarbottom{margin-top:auto;font-size:13px;padding:12px 8px;color:#776862}main{flex:1;min-width:0;display:flex;flex-direction:column}.sessionhead{height:77px;padding:17px 30px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.sessionhead strong{font-size:14px;font-weight:550}.sessionhead small{display:block;margin-top:9px;color:var(--muted);font-size:12px}.pill{font-size:11px;padding:5px 9px;background:#f5f1ee;border-radius:5px;color:#927c73}.chat{width:760px;margin:24px auto 0;flex:1}.user{float:right;background:#fbf0f1;padding:12px 17px;border-radius:17px;max-width:560px;line-height:1.7}.assistant{clear:both;padding-top:35px;line-height:1.9}.assistant h2{font-size:20px;margin:10px 0}.assistant p{color:#675c57}.assistant .meta{color:var(--muted);font-size:12px}.suggestion{border-left:2px solid #dec9c1;padding-left:14px;color:#85716a;font-size:13px}.bottom{width:760px;margin:10px auto 24px;position:relative}.focus .bottom{z-index:21}.veil{position:absolute;inset:34px 0 0;background:rgba(24,21,23,.60);z-index:20;border:0;width:100%;height:calc(100% - 34px);cursor:default}.focuscaption{color:#f2e7e0;font-size:12px;margin:0 3px 13px;display:flex;align-items:center;gap:8px}.focuscaption span:last-child{margin-left:auto;color:#c4b9b1}.composer{border:1px solid #e7dcd5;border-radius:18px;background:#fff;padding:17px 18px 12px;box-shadow:0 3px 15px #5f423508}.focus .composer{border-color:#dbb5ba;box-shadow:0 0 0 4px #ffffff0f,0 16px 55px #14090b40}.voicehead{display:flex;align-items:center;gap:8px;margin-bottom:19px;font-size:12px;color:#8c756c}.voicehead .provider{margin-left:auto;color:#a08d84;font-size:11px}.dot{width:7px;height:7px;background:var(--red);border-radius:50%}.draft{min-height:80px;font-size:15px;line-height:1.85;color:#493f3b;white-space:pre-wrap;outline:none}.draft:empty:before{content:attr(data-placeholder);color:#a89b94;pointer-events:none}.draft[contenteditable=false]{cursor:default}.listening{display:flex;align-items:center;gap:14px;margin:6px 0 20px}.time{font-size:25px;color:#453733;font-variant-numeric:tabular-nums}.wave{display:flex;height:43px;flex:1;gap:4px;align-items:center;justify-content:center}.wave i{width:3px;border-radius:4px;background:#b03d51}.tools{display:flex;align-items:center;gap:9px;margin-top:13px;min-height:34px;color:#8e7b70}.tools .hint{font-size:12px;margin-right:auto}.circle{border:0;border-radius:50%;width:32px;height:32px;background:#f5f2ef;color:#76675e;display:grid;place-items:center;font-size:20px;flex-shrink:0}.model{margin-left:auto;font-size:12px}.mic{color:var(--red);background:#f8e9eb}.send{background:var(--red);color:#fff}.mic svg{width:17px;height:17px}.secondary,.primary{border-radius:8px;padding:9px 14px;font-size:13px}.secondary{background:white;border:1px solid #e7dcd5;color:#78655c}.primary{background:var(--red);border:1px solid var(--red);color:#fff}.square{display:inline-block;width:8px;height:8px;background:currentColor;margin-right:7px;border-radius:1px}.statusline{font-size:11px;color:#cbbcb4;text-align:center;margin-top:12px}.idleline{color:#ad9b90}.spinner{display:inline-block;width:16px;height:16px;border:2px solid #e7cfd1;border-top-color:var(--red);border-radius:50%}.recognizing{padding:12px 0 21px;display:flex;align-items:center;gap:12px;color:#88746b;font-size:13px}.errorhint{font-size:12px;color:#a06e58;line-height:1.8;margin:12px 0}.caption{max-width:1200px;margin:0 auto 24px;color:#917c72;font-size:12px}.overview{display:none;max-width:1200px;margin:28px auto}.overview h1{font-size:27px;margin-bottom:9px}.overview>p{color:#8e786f;margin-bottom:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}.statecard{border:1px solid #dfd3cb;border-radius:14px;overflow:hidden;background:white}.statecard header{padding:18px 20px}.statecard h3{font-size:15px;margin:0 0 6px}.statecard header p{font-size:12px;color:#9a8276;margin:0}.miniscene{position:relative;background:#605a58;padding:24px 22px;min-height:294px}.ghost{font-size:12px;color:#b4a9a3;margin:0 0 20px}.mini .composer{position:relative;z-index:1;box-shadow:0 10px 25px #261b1833}.mini .focuscaption{font-size:11px}.mini .draft{min-height:76px;font-size:13px}.mini .voicehead{margin-bottom:12px}.mini .tools .hint{font-size:10px}.mini .secondary,.mini .primary{font-size:12px;padding:8px 10px}.mini .time{font-size:21px}.mini .wave{gap:3px}.mini .voicehead .provider{font-size:10px}.overviewfoot{margin-top:20px;padding:17px 20px;border-radius:9px;background:#e8dfd7;font-size:13px;line-height:1.8;color:#816d62}.settingsrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;color:#8d776d;font-size:13px}.settingsrow select{border:1px solid #e4d6ce;border-radius:6px;padding:7px;background:white;width:240px}@media(max-width:1250px){.frame,.overview,.caption{width:calc(100% - 32px)}aside{width:190px}.chat,.bottom{width:calc(100% - 70px)}}
+
+/* 听写态：沿用原输入框，使用紧凑的单行音频操作。 */
+.composer{border-radius:26px;border-color:#e4e1de;padding:17px 18px 12px}
+.focus .composer{border-color:#e7e4e1;box-shadow:0 14px 48px #00000026}
+.composer.dictating{padding:18px 16px;border-radius:28px}
+.dictating .draft:empty{height:0;min-height:0;overflow:hidden}
+.dictating .draft:empty:before{content:none}
+.dictating .draft:not(:empty){min-height:0;margin:0 8px 18px;font-size:14px;color:#78716c}
+.dictation-row{height:44px;display:flex;align-items:center;gap:19px}
+.dictation-control{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:0;background:#f0f0f0;color:#333;flex-shrink:0;padding:0}
+.dictation-control svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.dictation-control.accept{color:white;background:#202020}
+.dictation-control:hover{background:#e7e7e7}
+.dictation-control.accept:hover{background:#393939}
+.dictation-row .wave{height:36px;min-width:0;gap:3px;justify-content:space-between;overflow:hidden}
+.dictation-row .wave i{width:2px;flex-shrink:0;background:#2e2e2e;border-radius:2px}
+.dictation-progress{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:#8a8580}
+.dictation-progress .spinner{border-color:#e4e4e4;border-top-color:#333}
+.dictation-wait{width:40px;flex-shrink:0}
+.dictating-note{margin-top:13px;color:#d1cac4;font-size:11px;text-align:center;letter-spacing:.2px}
+.mini .dictation-row{gap:13px}
+.mini .dictation-row .wave{gap:2px}
+.mini .dictation-row .wave i{width:2px}
+.mini .dictation-control{width:34px;height:34px}
+.mini .dictating-note{font-size:10px}
+.mini .composer{border-radius:24px}
+.voicehead .dot{background:#999;width:5px;height:5px}
+.send{background:#202020}
+
+/* EduWork 品牌色 + ChatGPT 式紧凑布局；普通会话中原位展示。 */
+.dictating .dictation-control{background:#f5eeeb;color:#806761}
+.dictating .dictation-control.accept{background:var(--red);color:#fff}
+.dictating .dictation-control.accept:hover{background:#8f2032}
+.dictation-row .wave i{background:var(--red);opacity:.88}
+.dictation-progress .spinner{border-color:#ead5d8;border-top-color:var(--red)}
+.dictation-meta{display:flex;align-items:center;justify-content:space-between;margin:10px 7px 0;font-size:10px;color:#a59287;line-height:1.6}
+.engine-tag{display:flex;align-items:center;gap:5px;color:#8c756c}
+.engine-dot{width:4px;height:4px;border-radius:50%;background:#ad5262;margin-right:1px}
+.engine-divider{color:#bdada4}
+.composer.dictating{border-color:#e7d9d1;background:#fff;border-radius:26px;box-shadow:0 3px 14px #714d3a06;padding:14px 15px 11px}
+.send{background:var(--red)}
+.miniscene{background:#f8f4f0;min-height:260px;display:flex;flex-direction:column;justify-content:center}
+.ghost{color:#baa99e;font-size:11px}
+.mini .composer{box-shadow:0 3px 14px #714d3a06}
+.statusline{color:#b09b8e}
+.mini .dictation-meta{font-size:9px}
+</style>
+<div class="preview"><div><strong>语音输入 · 原生输入框听写</strong><small>设计效果稿 · 全流程在原输入框完成 · 无真实录音或服务请求</small></div><nav class="switch" aria-label="预览状态"><button data-state="idle">空闲</button><button data-state="recording">录音</button><button data-state="transcribing">转写</button><button data-state="review">确认</button><button data-state="error">失败</button><button data-state="settings">设置</button><button data-state="overview">总览</button></nav></div>
+<div class="frame" id="app"><div class="titlebar"><span class="brand">E</span> EduWork <span class="windowdots">− □ ×</span></div><div class="layout"><aside id="sidebar"><div class="logo"><span class="brand">E</span>EduWork</div><button class="newchat">＋ 新会话</button><div class="label">工作区</div><div class="workspace">▱ 我的工作区</div><div class="conversation">整理研究思路 <small>刚刚</small></div><div class="sidebarbottom">⚙ 设置</div></aside><main><div class="sessionhead" id="sessionhead"><div><strong>整理研究思路</strong><small>对话　　轨迹</small></div><span class="pill">标准模式</span></div><div class="chat" id="chat"><div class="user">我想从教育场景出发，梳理一下这个研究的切入点。</div><div class="assistant"><span class="meta">EduWork</span><h2>可以先从研究问题和使用场景开始。</h2><p>告诉我你关注的对象、希望解决的问题，以及目前已有的资料。<br>我会帮你把想法整理成一个清晰的研究框架。</p><div class="suggestion">你可以继续输入，也可以用语音补充想法。</div></div></div><div class="bottom" id="bottom"></div></main></div><button class="veil" id="veil" data-go="exit" aria-label="退出听写聚焦"></button></div>
+<section class="overview" id="overview"><h1>一个输入框，完成整段听写。</h1><p>EduWork 配色 · 紧凑听写布局 · 录音、转写、编辑和发送都在原生输入框内。</p><div class="grid" id="grid"></div><div class="overviewfoot">识别结果直接进入原草稿；保留原生编辑、引用和发送逻辑。没有第二个文本框，也没有“插入草稿”的中间步骤。<br>录音与转写时禁止发送；结果就绪后由用户确认，点击原发送按钮发送，或“完成听写”后继续编辑。</div></section>
+<p class="caption">交互原型：点击麦克风开始；点击右侧勾号结束录音，演示转写后显示结果；可直接编辑原输入框。Esc 退出听写。原型不采集音频、不调用服务。</p>
+<script>
+const microphone='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 003-3V5a3 3 0 00-6 0v7a3 3 0 003 3zm6-3a6 6 0 01-12 0H4a8 8 0 007 7.94V22h2v-2.06A8 8 0 0020 12z"/></svg>';
+const transcript='请帮我梳理这篇论文的研究问题，重点关注研究方法、实验设计，以及它在教育场景中的应用。';
+let state='idle',draft='',before='',timer;
+const escapeHtml=text=>text.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const button=(text,to,primary=false)=>'<button class="'+(primary?'primary':'secondary')+'" data-go="'+to+'">'+text+'</button>';
+function waveform(){return '<div class="wave" aria-label="正在录音，实时音量示意">'+Array.from({length:80},(_,i)=>{const envelope=Math.sin(Math.PI*i/79)**.55;const height=3+envelope*(4+Math.abs(Math.sin(i*1.47)*Math.cos(i*.23))*24);return '<i style="height:'+height+'px"></i>'}).join('')+'</div>'}
+function audioComposer(mode,mini,text){
+  const cancel='<button class="dictation-control" data-go="exit" aria-label="取消听写" title="取消听写"><svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg></button>';
+  const finish='<button class="dictation-control accept" data-go="stop" aria-label="停止录音并转写" title="停止录音并转写"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></button>';
+  const content=mode==='recording'?waveform():'<div class="dictation-progress"><span class="spinner"></span><span>正在转写…</span></div>';
+  return '<div class="composer dictating" role="group" aria-label="原输入框听写"><div class="draft" '+(!mini?'id="native-editor" ':'')+'role="textbox" aria-label="保留的原草稿" aria-readonly="true" tabindex="0" contenteditable="false">'+escapeHtml(text)+'</div><div class="dictation-row">'+cancel+content+(mode==='recording'?finish:'<span class="dictation-wait"></span>')+'</div><div class="dictation-meta"><span class="engine-tag"><span class="engine-dot"></span>Whisper tiny <span class="engine-divider">·</span> CPU</span><span>音频在本机处理</span></div></div>';
+}
+function composer(mode,mini=false){
+const active=mode!=='idle',review=mode==='review',busy=['recording','transcribing'].includes(mode);
+const text=mini?(review?transcript:''):draft;
+if(busy)return audioComposer(mode,mini,text);
+const label={recording:'正在听写',transcribing:'正在转写',review:'识别完成 · 可直接编辑',error:'听写未完成',settings:'听写设置'}[mode];
+let html='';
+html+='<div class="composer" role="group" aria-label="会话输入框">';
+if(active)html+='<div class="voicehead">'+(mode==='transcribing'?'<span class="spinner"></span>':'<span class="dot"></span>')+label+'<span class="provider">'+(mode==='error'?'自定义语音服务 · 云端':'本地 Whisper · CPU')+'</span></div>';
+if(mode==='settings')html+='<div class="settingsrow">识别服务<select><option>本地 Whisper · CPU</option><option>自定义语音服务 · 云端</option></select></div><div class="settingsrow">麦克风<select><option>系统默认麦克风</option></select></div>';
+html+='<div class="draft" '+(!mini?'id="native-editor" ':'')+'role="textbox" aria-label="会话草稿" aria-multiline="true" tabindex="0" contenteditable="'+(!busy&&mode!=='settings')+'" data-placeholder="'+(mode==='recording'?'说出你的想法，停止后文字将出现在这里…':mode==='transcribing'?'正在识别，原草稿保持不变…':'发送消息，或点击麦克风开始听写…')+'">'+escapeHtml(text)+'</div>';
+
+
+if(mode==='error')html+='<div class="errorhint">暂时无法连接语音服务。原草稿已保留，可在 60 秒内重试。</div>';
+html+='<div class="tools">';
+if(review)html+='<span class="hint">检查文字，使用原发送按钮发送</span>'+button('完成听写','exit')+'<button class="circle send" data-go="send" aria-label="确认并发送">↑</button>';
+else if(mode==='error')html+='<span class="hint">不自动切换其他服务</span>'+button('退出','exit')+button('设置','settings')+button('重试','stop',true);
+else if(mode==='settings')html+='<span class="hint">云端服务需明确选择并配置凭据</span>'+button('完成','exit');
+else html+='<button class="circle" aria-label="添加">＋</button><span style="font-size:12px">◇ 标准权限</span><span class="model">当前会话模型⌄</span><button class="circle mic" data-go="recording" aria-label="听写">'+microphone+'</button><button class="circle send" data-go="send" aria-label="发送">↑</button>';
+return html+'</div></div><div class="statusline '+(active?'':'idleline')+'">'+(review?'文字已在原输入框中，尚未发送':active?'保留原草稿 · 退出听写不会自动发送':'当前会话 · 原生输入框')+'</div>';
+}
+function render(next){
+clearTimeout(timer);
+const editor=document.getElementById('native-editor');if(editor&&editor.contentEditable==='true')draft=editor.innerText;
+if(next==='exit'){if(['recording','transcribing','error'].includes(state))draft=before;next='idle'}
+if(next==='recording')before=draft;
+if(next==='send'){draft='';next='idle'}
+if(next==='review'&&state!=='review')draft=before+(before?'\n':'')+transcript;
+if(next==='stop'){next='transcribing';timer=setTimeout(()=>render('review'),1400)}
+state=next;const overview=state==='overview',focused=!overview&&state!=='idle';
+document.querySelectorAll('[data-state]').forEach(b=>b.classList.toggle('selected',b.dataset.state===state));
+document.getElementById('app').style.display=overview?'none':'block';document.getElementById('overview').style.display=overview?'block':'none';
+document.getElementById('app').classList.remove('focus');document.getElementById('veil').hidden=true;
+for(const id of ['sidebar','chat','sessionhead'])document.getElementById(id).inert=false;
+document.getElementById('bottom').innerHTML=composer(state);
+if(overview){const cards=[['recording','01 / 录音','取消、横向波形、确认；原输入框变成紧凑听写条。'],['transcribing','02 / 转写','保持同一框体，轻量等待反馈；仍可随时取消。'],['review','03 / 确认','结果在原生编辑区，直接修改、直接发送。'],['error','04 / 恢复','错误仍在框内展示，保留原草稿。']];document.getElementById('grid').innerHTML=cards.map(([s,t,h])=>'<article class="statecard"><header><h3>'+t+'</h3><p>'+h+'</p></header><div class="miniscene mini"><div class="ghost">当前会话 · 原输入框</div>'+composer(s,true)+'</div></article>').join('')}
+if(state==='review')requestAnimationFrame(()=>{const el=document.getElementById('native-editor');el.focus({preventScroll:true});if(el.contentEditable==='true'){const range=document.createRange();range.selectNodeContents(el);range.collapse(false);getSelection().removeAllRanges();getSelection().addRange(range)}});
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-state],[data-go]');if(b)render(b.dataset.state||b.dataset.go)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();render('exit')}});
+render(new URLSearchParams(location.search).get('state')||'recording');
+</script>
+</html>

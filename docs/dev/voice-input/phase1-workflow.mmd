@@ -1,0 +1,26 @@
+flowchart TD
+  A["点击听写：原输入框进入听写态"] --> B["麦克风授权后 APP update<br/>绑定 owner / taskId / generation"]
+  B --> C["录音 → 停止并释放麦克风"]
+  C --> D["append seq=0：完整 PCM，仅一次"]
+  D --> E["APP finish → 已有 transcribe<br/>Whisper CPU 或供应商文件转写"]
+  E --> F["APP result-ready / transcribed<br/>社区 adapter 输出 ASR completed<br/>清理引擎与音频文件"]
+  F --> G{"任务仍有效且原生插入成功？"}
+  G -->|"过期 / 已取消"| X["丢弃结果，取消清理<br/>不写草稿、不调用 Runtime cancel"]
+  G -->|"选区或草稿冲突"| Q["awaiting-insert<br/>用户在原框重新定位"]
+  Q --> G
+  G -->|"成功"| L["Client review：原输入框编辑校对"]
+  L --> M{"用户确认"}
+  M -->|"完成听写"| N["保留草稿 → confirm keep-draft"]
+  M -->|"原发送按钮"| O["既有 DSH submit，仅提交普通文本"]
+  O --> P{"本次提交 accepted？"}
+  P -->|"拒绝"| L
+  P -->|"接受"| R["confirm send：仅确认，不重复发送"]
+  N --> S["APP completed：听写流程结束"]
+  R --> S
+  E -.->|"取消 / 超时 / 窗口销毁"| X
+  classDef primary fill:#fff1f2,stroke:#a62439,color:#472b32
+  classDef runtime fill:#edf5fa,stroke:#668ca6,color:#284556
+  classDef note fill:#f6f4f1,stroke:#b3a79d,color:#6b5b51
+  class A,F,L,S primary
+  class O runtime
+  class X,Q note

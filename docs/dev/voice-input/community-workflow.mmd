@@ -1,0 +1,18 @@
+flowchart TD
+  A["社区 v0.12.0 · Qwen ASR<br/>Client → 同源 Host 代理 → 供应商"] --> B["session.update → session.updated"]
+  B --> C["持续采集 PCM · 多次 append"]
+  C --> D["供应商 VAD 分段<br/>可选 speech / text / stash 事件"]
+  D --> E["ASR completed：某语段最终文字<br/>item_id + transcript"]
+  E --> F["onTranscript → Controller 合并语段"]
+  F --> G{"社区发送策略"}
+  G -->|"空闲且满足条件"| H["提交 Harness<br/>推理 / 工具 / 后续 TTS"]
+  G -->|"忙碌或已有草稿"| I["合并到原生草稿<br/>按社区策略继续处理"]
+  H --> J{"继续语音会话？"}
+  I --> J
+  J -->|"继续"| C
+  J -->|"停止"| K["session.finish + 关闭连接<br/>不代表用户确认"]
+  N["本图只展开 ASR<br/>原版 connect 同时连接 ASR / TTS"] -.-> A
+  classDef primary fill:#fff1f2,stroke:#a62439,color:#472b32
+  classDef note fill:#f6f4f1,stroke:#b3a79d,color:#6b5b51
+  class A,E,F primary
+  class K,N note
